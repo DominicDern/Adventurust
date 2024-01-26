@@ -1,3 +1,7 @@
+pub enum Error {
+    NoMoreActions,
+}
+
 #[derive(Debug, PartialEq, Default)]
 pub struct Actor {
     name: String,
@@ -71,6 +75,39 @@ impl Actor {
 
     pub fn actions(&self) -> &(u8, u8) {
         &self.actions
+    }
+
+    pub fn use_action(&mut self) -> Option<Error> {
+        if self.actions().0 == 0 {
+            Some(Error::NoMoreActions)
+        } else {
+            self.actions.0 -= 1;
+            None
+        }
+    }
+
+    pub fn use_bonus_action(&mut self) -> Option<Error> {
+        if self.bonus_actions().0 == 0 {
+            Some(Error::NoMoreActions)
+        } else {
+            self.bonus_actions.0 -= 1;
+            None
+        }
+    }
+
+    pub fn use_reaction(&mut self) -> Option<Error> {
+        if self.reactions().0 == 0 {
+            Some(Error::NoMoreActions)
+        } else {
+            self.reactions.0 -= 1;
+            None
+        }
+    }
+
+    pub fn reset_actions(&mut self) {
+        self.actions.0 = self.actions.1;
+        self.bonus_actions.0 = self.bonus_actions.1;
+        self.reactions.0 = self.reactions.1;
     }
 
     pub fn add_actions(&mut self, amount: u8) {

@@ -92,6 +92,42 @@ impl Encounter {
         }
     }
 
+    pub fn actions(&self) -> &(u8, u8) {
+        self.get_current().actions()
+    }
+
+    pub fn bonus_actions(&self) -> &(u8, u8) {
+        self.get_current().bonus_actions()
+    }
+
+    pub fn reactions(&self) -> &(u8, u8) {
+        self.get_current().reactions()
+    }
+
+    pub fn add_actions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().add_actions(amount);
+    }
+
+    pub fn remove_actions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().remove_actions(amount);
+    }
+
+    pub fn add_bonus_actions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().add_bonus_actions(amount);
+    }
+
+    pub fn remove_bonus_actions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().remove_bonus_actions(amount);
+    }
+
+    pub fn add_reactions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().add_reactions(amount);
+    }
+
+    pub fn remove_reactions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().remove_reactions(amount);
+    }
+
     /// Moves the initiative order to the next actor.
     pub fn end_turn(&mut self) {
         match self.current {
