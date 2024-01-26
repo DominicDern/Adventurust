@@ -9,7 +9,7 @@ pub struct Actor {
 impl Actor {
     pub fn new(name: &str, initiative_mod: i16, max_health: u16) -> Self {
         let name = name.to_string();
-        let current_health = max_health.clone();
+        let current_health = max_health;
         Self {
             name,
             initiative_mod,

@@ -1,3 +1,4 @@
+mod abilities;
 mod actor;
 mod encounter;
 mod roll;
