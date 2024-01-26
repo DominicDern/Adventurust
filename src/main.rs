@@ -1,3 +1,5 @@
+extern crate iced;
+
 mod actor;
 mod encounter;
 mod roll;

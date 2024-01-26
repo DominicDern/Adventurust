@@ -18,8 +18,7 @@ impl Encounter {
 impl Encounter {
     /// Rolls initiative for an actor and inserts it in it's respective place in initiative.
     pub fn add_actor(&mut self, actor: Actor) {
-        let initiative =
-            IndividualRoll::new(None, 20, Some(actor.initiative().clone())).roll() as u8;
+        let initiative = IndividualRoll::new(None, 20, Some(*actor.initiative())).roll() as u8;
         let mut index = 0;
 
         if self.actors.is_empty() {
@@ -68,38 +67,28 @@ impl Encounter {
     }
 
     pub fn get(&self, name: String) -> Option<&Actor> {
-        for (_, actor) in &self.actors {
-            if actor.name().to_lowercase() == name.to_lowercase() {
-                return Some(actor);
-            }
-        }
-        None
+        self.actors
+            .iter()
+            .map(|(_, actor)| actor)
+            .find(|&actor| actor.name().to_lowercase() == name.to_lowercase())
     }
 
     fn get_mut(&mut self, name: String) -> Option<&mut Actor> {
-        for (_, actor) in &mut self.actors {
-            if actor.name().to_lowercase() == name.to_lowercase() {
-                return Some(actor);
-            }
-        }
-        None
+        self.actors
+            .iter_mut()
+            .map(|(_, actor)| actor)
+            .find(|actor| actor.name().to_lowercase() == name.to_lowercase())
     }
 
     pub fn damage(&mut self, name: String, amount: u16) {
-        match self.get_mut(name) {
-            Some(actor) => {
-                actor.damage(amount);
-            }
-            None => {}
+        if let Some(actor) = self.get_mut(name) {
+            actor.damage(amount);
         }
     }
 
     pub fn heal(&mut self, name: String, amount: u16) {
-        match self.get_mut(name) {
-            Some(actor) => {
-                actor.heal(amount);
-            }
-            None => {}
+        if let Some(actor) = self.get_mut(name) {
+            actor.heal(amount);
         }
     }
 
@@ -108,7 +97,7 @@ impl Encounter {
         match self.current {
             Some(index) => {
                 // Check to see if this index is last in the vector
-                if index == self.actors.len() - 1 as usize {
+                if index == self.actors.len() - 1usize {
                     self.current = Some(0);
                 } else {
                     self.current = Some(self.current.unwrap() + 1);
