@@ -22,10 +22,10 @@ fn main() {
     //     ..Settings::default()
     // })
     // .unwrap();
-    let teag = Actor::new("Teagan", -1, 10);
-    let ben = Actor::new("Ben", 1, 11);
-    let jake = Actor::new("Jacob", 2, 12);
-    let kate = Actor::new("Katie", 0, 13);
+    let teag = Actor::new("Teagan", -1, 10, 1, 1, 1);
+    let ben = Actor::new("Ben", 1, 11, 1, 1, 1);
+    let jake = Actor::new("Jacob", 2, 12, 1, 1, 1);
+    let kate = Actor::new("Katie", 0, 13, 1, 1, 1);
 
     let mut encounter = Encounter::new();
     encounter.add_actor(teag);
@@ -60,7 +60,7 @@ impl Application for State {
 
     fn new(_flags: ()) -> (State, Command<Self::Message>) {
         let tracker_application = State {
-            actor: Actor::new("temp", 10, 10),
+            actor: Actor::new("temp", 10, 10, 1, 1, 1),
         };
 
         (tracker_application, Command::none())
