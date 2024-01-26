@@ -1,6 +1,6 @@
 [package]
 version = "0.1.0"
-name = "Adventurust"
+name = "adventurust"
 authors = ["Dominic Dern"]
 rust-version = "1.77.0"
 edition = "2021"

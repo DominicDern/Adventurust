@@ -51,14 +51,13 @@ impl Roll {
         for roll in roll.clone() {
             let number_of_rolls: Option<u8>;
             let die_size: u8;
-            let modifier: Option<i16>;
 
             let mut roll: Vec<&str> = roll.split('+').collect();
-            if roll.len() == 2 {
-                modifier = Some(roll[1].trim().parse().unwrap());
+            let modifier = if roll.len() == 2 {
+                Some(roll[1].trim().parse().unwrap())
             } else {
-                modifier = None;
-            }
+                None
+            };
             if roll.len() > 1 {
                 roll.pop();
             }
