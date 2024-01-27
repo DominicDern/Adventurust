@@ -2,6 +2,7 @@ extern crate iced;
 
 mod actor;
 mod encounter;
+mod inventory;
 mod item;
 mod roll;
 
@@ -33,13 +34,6 @@ fn main() {
     encounter.add_actor(ben);
     encounter.add_actor(jake);
     encounter.add_actor(kate);
-
-    println!("{:#?}", encounter);
-    println!("{:#?}", encounter.get_current());
-
-    encounter.end_turn();
-
-    println!("{:#?}", encounter.get_current());
 }
 
 #[derive(Debug, Clone, Copy)]

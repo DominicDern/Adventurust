@@ -1,3 +1,5 @@
+use crate::inventory::Inventory;
+
 pub enum Error {
     NoMoreActions,
 }
@@ -11,6 +13,7 @@ pub struct Actor {
     actions: (u8, u8),
     bonus_actions: (u8, u8),
     reactions: (u8, u8),
+    inventory: Inventory,
 }
 
 impl Actor {
@@ -32,6 +35,7 @@ impl Actor {
             actions: (actions, actions),
             bonus_actions: (bonus_actions, bonus_actions),
             reactions: (reactions, reactions),
+            inventory: Inventory::new(),
         }
     }
 }
