@@ -92,15 +92,62 @@ impl Encounter {
         }
     }
 
-    /// Moves the initiative order to the next actor.
+    pub fn actions(&self) -> &(u8, u8) {
+        self.get_current().actions()
+    }
+
+    pub fn bonus_actions(&self) -> &(u8, u8) {
+        self.get_current().bonus_actions()
+    }
+
+    pub fn reactions(&self) -> &(u8, u8) {
+        self.get_current().reactions()
+    }
+
+    pub fn all_reactions(&self) -> Vec<(&Actor, &(u8, u8))> {
+        let mut actors = Vec::new();
+        for (_, actor) in &self.actors {
+            let reactions = self.get(actor.name().to_string()).unwrap().reactions();
+            actors.push((actor, reactions));
+        }
+        actors
+    }
+
+    pub fn add_actions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().add_actions(amount);
+    }
+
+    pub fn remove_actions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().remove_actions(amount);
+    }
+
+    pub fn add_bonus_actions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().add_bonus_actions(amount);
+    }
+
+    pub fn remove_bonus_actions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().remove_bonus_actions(amount);
+    }
+
+    pub fn add_reactions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().add_reactions(amount);
+    }
+
+    pub fn remove_reactions(&mut self, name: String, amount: u8) {
+        self.get_mut(name).unwrap().remove_reactions(amount);
+    }
+
+    /// Moves the initiative order to the next actor and resets their actions.
     pub fn end_turn(&mut self) {
         match self.current {
             Some(index) => {
                 // Check to see if this index is last in the vector
                 if index == self.actors.len() - 1usize {
                     self.current = Some(0);
+                    self.get_current_mut().reset_actions();
                 } else {
                     self.current = Some(self.current.unwrap() + 1);
+                    self.get_current_mut().reset_actions();
                 }
             }
             None => {
