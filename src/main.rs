@@ -2,6 +2,7 @@ extern crate iced;
 
 mod actor;
 mod encounter;
+mod item;
 mod roll;
 
 use actor::Actor;
