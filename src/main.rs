@@ -16,24 +16,14 @@ use iced::{
 };
 
 fn main() {
-    // State::run(Settings {
-    //     window: window::Settings {
-    //         size: (500, 800),
-    //         ..window::Settings::default()
-    //     },
-    //     ..Settings::default()
-    // })
-    // .unwrap();
-    let teag = Actor::new("Teagan", -1, 10, 1, 1, 1);
-    let ben = Actor::new("Ben", 1, 11, 1, 1, 1);
-    let jake = Actor::new("Jacob", 2, 12, 1, 1, 1);
-    let kate = Actor::new("Katie", 0, 13, 1, 1, 1);
-
-    let mut encounter = Encounter::new();
-    encounter.add_actor(teag);
-    encounter.add_actor(ben);
-    encounter.add_actor(jake);
-    encounter.add_actor(kate);
+    State::run(Settings {
+        window: window::Settings {
+            size: (500, 800),
+            ..window::Settings::default()
+        },
+        ..Settings::default()
+    })
+    .unwrap();
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -55,7 +45,7 @@ impl Application for State {
 
     fn new(_flags: ()) -> (State, Command<Self::Message>) {
         let tracker_application = State {
-            actor: Actor::new("temp", 10, 10, 1, 1, 1),
+            actor: Actor::default(),
         };
 
         (tracker_application, Command::none())
@@ -90,6 +80,7 @@ impl Application for State {
 
         // let non_active_actors: Row<'_, Message> = Row::with_children(actor_elements);
         let controls = column![
+            text(self.actor.name()),
             text(self.actor.health()),
             button("Damage").on_press(Message::Damage(10)),
             button("Heal").on_press(Message::Heal(10))

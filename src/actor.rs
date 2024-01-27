@@ -35,7 +35,7 @@ impl Actor {
             actions: (actions, actions),
             bonus_actions: (bonus_actions, bonus_actions),
             reactions: (reactions, reactions),
-            inventory: Inventory::new(),
+            inventory: Inventory::default(),
         }
     }
 }
