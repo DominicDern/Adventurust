@@ -11,14 +11,14 @@ use encounter::Encounter;
 
 use iced::{
     executor,
-    widget::{button, column, container, row, text, Row},
+    widget::{button, column, container, Space, row, text, Row, Rule},
     window, Application, Command, Element, Length, Settings, Theme,
 };
 
 fn main() {
     State::run(Settings {
         window: window::Settings {
-            size: (500, 800),
+            size: (1800, 920),
             ..window::Settings::default()
         },
         ..Settings::default()
@@ -79,11 +79,18 @@ impl Application for State {
         //     .collect();
 
         // let non_active_actors: Row<'_, Message> = Row::with_children(actor_elements);
-        let controls = column![
-            text(self.actor.name()),
-            text(self.actor.health()),
-            button("Damage").on_press(Message::Damage(10)),
-            button("Heal").on_press(Message::Heal(10))
+        let controls = row![
+            column![text("menu")].width(Length::FillPortion(2)),
+            Rule::vertical(100),
+            column![
+                text("Initiative tabs").height(Length::FillPortion(1)),
+                Rule::horizontal(100.0),
+                text("Actor sheet").height(Length::FillPortion(5)),
+                Rule::horizontal(100),
+                text("Actor actions").height(Length::FillPortion(3)),
+            ].width(Length::FillPortion(7)),
+            Rule::vertical(100),
+            column![text("world actions")].width(Length::FillPortion(2))
         ];
         container(controls)
             .width(Length::Fill)
